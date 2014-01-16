@@ -21,10 +21,16 @@ module.exports = function(grunt) {
       if(!fs.existsSync(name + '/component.json')) return next();
       grunt.log.subhead(name);
 
-      var child = spawn(bin, [
+      var spawnParams = [
         '--force',
         '--dev'
-      ], {
+      ];
+      
+      if (options.remotes.length) {
+	    spawnParams.push('--remotes ' + options.remotes.join(' ');
+      }
+      
+      var child = spawn(bin, spawnParams, {
         stdio: 'inherit',
         cwd: name
       });
